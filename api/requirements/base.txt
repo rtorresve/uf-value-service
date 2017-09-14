@@ -8,3 +8,5 @@ requests==2.18.4
 unholster.milieu==1.0.0
 six==1.10.0
 dj-database-url==0.4.2
+selenium==3.5.0
+bs4==0.0.1
