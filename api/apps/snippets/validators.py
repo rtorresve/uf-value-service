@@ -23,5 +23,5 @@ def validate_order_years(year_to, year_from):
     """
     :param int: int:
     """
-    if not year_to > year_from:
+    if year_to < year_from:
         raise ValueError('Verify the years order.')
