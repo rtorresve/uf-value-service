@@ -10,3 +10,8 @@ six==1.10.0
 dj-database-url==0.4.2
 selenium==3.5.0
 bs4==0.0.1
+django-redis==4.8.0
+redis>=2.10.5
+
+
+celery==3.1.25

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 import milieu
+from django.conf.global_settings import ADMINS
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -30,23 +31,37 @@ except FileNotFoundError:
 SECRET_KEY = '*oyw40a%^u*)b1h9i)010qj-0h0b1rd)c&o2ipg18--!6da)*a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = M.DEBUG
 
 ALLOWED_HOSTS = ['*']
 
 # Application definition
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+THIRD_PARTY_APPS = [
     'rest_framework',
     'corsheaders',
     'filters',
-    'apps.indicators',
 ]
+
+LOCAL_APPS = [
+    'apps.indicators'
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+ADMINS = [
+    ("Rafael Torres", 'rdtr.sis@gmail.com'),
+]
+
+MANAGERS = ADMINS
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -104,9 +119,13 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
+        'APP_DIRS': False,
         'OPTIONS': {
             'debug': DEBUG,
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -172,3 +191,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+INSTALLED_APPS += ['apps.tasks.celery.CeleryConfig']
+
+CELERY_ALWAYS_EAGER = False
+CELERY_BROKER_URL = M.CELERY_BROKER_URL
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+
+CELERY_BROKER_URL = M.CELERY_BROKER_URL or 'django://'
+
+if CELERY_BROKER_URL == 'django://':
+    CELERY_RESULT_BACKEND = 'redis://'
+else:
+    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
