@@ -4,15 +4,24 @@ Created on Sep 14, 2017
 
 @author: rtorres
 '''
+import milieu
 import os
 from celery import Celery
 from django.apps import apps, AppConfig
 from django.conf import settings
 
+try:
+    M = milieu.init(path='/app/conf.json')
+except FileNotFoundError:
+    M = milieu.init()
+
+DJANGO_ENV = M.DJANGO_ENV or 'dev'
 
 if not settings.configured:
     # set the default Django settings module for the 'celery' program.
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.local')  # pragma: no cover
+    os.environ.setdefault(
+        'DJANGO_SETTINGS_MODULE',
+        'conf.settings.{0}'.format(DJANGO_ENV))  # pragma: no cover
 
 
 app = Celery('tasks', broker=settings.M.CELERY_BROKER_URL)

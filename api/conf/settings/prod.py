@@ -15,8 +15,6 @@ SECRET_KEY = M.SECRET_KEY
 
 CELERY_ALWAYS_EAGER = M.CELERY_ALWAYS_EAGER
 
-INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
-
 DEBUG = False
 
 ALLOWED_HOSTS = M.ALLOWED_HOSTS
@@ -35,7 +33,6 @@ SENTRY_CELERY_LOGLEVEL = M.DJANGO_SENTRY_LOG_LEVEL
 
 RAVEN_CONFIG = {
     'dsn': M.DJANGO_SENTRY_DSN,
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
     'CELERY_LOGLEVEL': SENTRY_CELERY_LOGLEVEL}
 
 LOGGING = {

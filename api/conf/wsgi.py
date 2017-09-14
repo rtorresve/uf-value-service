@@ -14,14 +14,14 @@ import milieu
 
 
 try:
-    M = milieu.init(path='/app/endpoint/conf.json')
+    M = milieu.init(path='/app/conf.json')
 except FileNotFoundError:
     M = milieu.init()
 
 DJANGO_ENV = M.DJANGO_ENV or 'dev'
 
 if DJANGO_ENV is 'prod':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.production')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.prod')
     from raven.contrib.django.raven_compat.middleware.wsgi import Sentry
 else:
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.base')
