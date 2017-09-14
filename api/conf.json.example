@@ -5,5 +5,9 @@
     "SECRET_KEY": "$0EtXK=^X[Spj]uT!)z2i{k-1v~&*9^hLA_{--I8Zsvf&9X:w?",
     "DATABASE_URL": "dbm://user:paswword@host:port/db_name",
     "BROWSER": "phantomjs",
-    "BROWSER_URL": "http://HOST:PORT/wd/hub"
+    "BROWSER_URL": "http://HOST:PORT/wd/hub",
+    "CELERY_ALWAYS_EAGER": false,
+    "CELERY_BROKER_URL": "amqp://127.0.0.1/0",
+    "DJANGO_SENTRY_DSN": "",
+    "DJANGO_SENTRY_LOG_LEVEL": 20
 }

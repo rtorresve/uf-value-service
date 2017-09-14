@@ -13,6 +13,8 @@ from .base import *
 
 SECRET_KEY = M.SECRET_KEY
 
+CELERY_ALWAYS_EAGER = M.CELERY_ALWAYS_EAGER
+
 INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
 
 DEBUG = False
@@ -23,14 +25,18 @@ INSTALLED_APPS += [
     'gunicorn',
     'raven.contrib.django.raven_compat',
 ]
+RAVEN_MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware']
+MIDDLEWARE = RAVEN_MIDDLEWARE + MIDDLEWARE
 
 DATABASES = {'default': dj_database_url.config(default=M.DATABASE_URL)}
 
 SENTRY_CLIENT = 'raven.contrib.django.raven_compat.DjangoClient'
+SENTRY_CELERY_LOGLEVEL = M.DJANGO_SENTRY_LOG_LEVEL
 
 RAVEN_CONFIG = {
     'dsn': M.DJANGO_SENTRY_DSN,
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir))}
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+    'CELERY_LOGLEVEL': SENTRY_CELERY_LOGLEVEL}
 
 LOGGING = {
     'version': 1,
