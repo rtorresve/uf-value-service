@@ -6,7 +6,7 @@ from apps.indicators.serializers import UFSerializer
 from apps.indicators.validations import uf_query_schema
 
 
-class UFViewSet(FiltersMixin, viewsets.ReadOnlyModelViewSet):
+class UFViewSet(FiltersMixin, viewsets.ModelViewSet):
     queryset = UF.objects.all()
     serializer_class = UFSerializer
     ordering = ('date',)
