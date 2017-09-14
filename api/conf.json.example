@@ -1,0 +1,7 @@
+{
+    "API_VERSION": "v1",
+    "DEBUG": true,
+    "DJANGO_ENV": "dev",
+    "SECRET_KEY": "$0EtXK=^X[Spj]uT!)z2i{k-1v~&*9^hLA_{--I8Zsvf&9X:w?",
+    "DATABASE_URL": "dbm://user:paswword@host:port/db_name"
+}

@@ -1,0 +1,10 @@
+Django==1.11.4
+djangorestframework==3.6.4
+drf-url-filters==0.5.1
+django-filter==1.0.4
+django-cors-headers==2.1.0
+djangorestframework-jsonapi==2.2.0
+requests==2.18.4
+unholster.milieu==1.0.0
+six==1.10.0
+dj-database-url==0.4.2

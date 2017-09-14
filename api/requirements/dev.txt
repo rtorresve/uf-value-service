@@ -1,0 +1,8 @@
+-r base.txt
+flake8==3.4.1
+flake8-colors==0.1.6
+flake8-commas==0.1.6
+flake8-comprehensions==1.2.1
+flake8-debugger==1.4.0
+flake8-quotes==0.8.1
+pep8-naming==0.4.1
