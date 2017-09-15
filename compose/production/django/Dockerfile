@@ -1,24 +1,31 @@
-FROM rafasis1986/python-mysql:3.6
+FROM python:3.5
 
-RUN apk add --update build-base py-greenlet
- 
-RUN addgroup -S django \
-    && adduser -S -g django django
+ENV PYTHONUNBUFFERED 1
 
-COPY ./api/requirements/ /requirements
+RUN groupadd -r django \
+    && useradd -r -g django django
+
+# Requirements have to be pulled and installed here, otherwise caching won't work
+COPY ./api/requirements /requirements
+RUN pip install --no-cache-dir -r /requirements/production.txt \
+    && rm -rf /requirements
 
 COPY ./compose/production/django/gunicorn.sh /gunicorn.sh
+RUN sed -i 's/\r//' /gunicorn.sh
+RUN chmod +x /gunicorn.sh
+RUN chown django /gunicorn.sh
 
-COPY ./api /app
+COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r//' /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+RUN chown django /entrypoint.sh
 
-RUN pip3 install --no-cache-dir -r /requirements/production.txt \
-    && sed -i 's/\r//' /gunicorn.sh \
-    && chmod +X /gunicorn.sh
+COPY . /app
 
-WORKDIR /app
-
-RUN chown -R django:django /app
+RUN chown -R django /app
 
 USER django
 
 WORKDIR /app
+
+ENTRYPOINT ["/entrypoint.sh"]

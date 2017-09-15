@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-import dj_database_url
-import milieu
+
 import os
+
+import milieu
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,37 +30,23 @@ except FileNotFoundError:
 SECRET_KEY = '*oyw40a%^u*)b1h9i)010qj-0h0b1rd)c&o2ipg18--!6da)*a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = M.DEBUG
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 # Application definition
-DJANGO_APPS = [
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
-
-THIRD_PARTY_APPS = [
     'rest_framework',
     'corsheaders',
     'filters',
+    'apps.indicators',
 ]
-
-LOCAL_APPS = [
-    'apps.indicators'
-]
-
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-
-ADMINS = [
-    ("Rafael Torres", 'rdtr.sis@gmail.com'),
-]
-
-MANAGERS = ADMINS
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -118,13 +105,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'debug': DEBUG,
-            'loaders': [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
-            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -144,8 +127,13 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config(
-    default="mysql://docker:docker@127.0.0.1:3307/uf_value")}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -185,16 +173,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-INSTALLED_APPS += ['apps.tasks.celery.CeleryConfig']
-
-CELERY_ALWAYS_EAGER = False
-CELERY_BROKER_URL = M.CELERY_BROKER_URL
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
-
-CELERY_BROKER_URL = M.CELERY_BROKER_URL or 'django://'
-
-if CELERY_BROKER_URL == 'django://':
-    CELERY_RESULT_BACKEND = 'redis://'
-else:
-    CELERY_RESULT_BACKEND = CELERY_BROKER_URL

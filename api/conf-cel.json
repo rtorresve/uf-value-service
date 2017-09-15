@@ -1,0 +1,15 @@
+{
+    "API_VERSION": "v1",
+    "DEBUG": false,
+    "SECRET_KEY": "$0EtXK=^X[Spj]uT!)z2i{k-1v~&*9^hLA_{--I8Zsvf&9X:w?",
+    "DJANGO_ENV": "prod",
+    "DATABASE_URL": "postgres://docker:passwd@127.0.0.1:5433/docker",
+    "BROWSER": "phantomjs",
+    "ALLOWED_HOSTS": [".devtest.bid", "localhost"],
+    "BROWSER": "phantomjs",
+    "BROWSER_URL": "http://m:4444/wd/hub",
+    "CELERY_ALWAYS_EAGER": false,
+    "CELERY_BROKER_URL": "amqp://jzpflhoh:BrYKixNkNiTrcsJVkSH1aUC4-4kcxzLR@donkey.rmq.cloudamqp.com/jzpflhoh",
+    "DJANGO_SENTRY_DSN": "https://9dc1375541ea474c87a579913e0762c8:8780dcde0e8e4830a00c803247708c68@sentry.io/217108",
+    "DJANGO_SENTRY_LOG_LEVEL": 20
+}
