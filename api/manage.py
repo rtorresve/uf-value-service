@@ -2,6 +2,7 @@
 import milieu
 import os
 import sys
+from builtins import FileNotFoundError
 
 try:
     M = milieu.init(path='/app/conf.json')

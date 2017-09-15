@@ -9,15 +9,11 @@ COPY ./api/requirements/ /requirements
 
 COPY ./compose/production/django/gunicorn.sh /gunicorn.sh
 
-COPY ./compose/production/django/celery/worker/start.sh /celeryworker.sh
-
 COPY ./api /app
 
 RUN pip3 install --no-cache-dir -r /requirements/production.txt \
     && sed -i 's/\r//' /gunicorn.sh \
-    && chmod +X /gunicorn.sh \
-    && sed -i 's/\r//' /celeryworker.sh \
-    && chmod +X /celeryworker.sh
+    && chmod +X /gunicorn.sh
 
 WORKDIR /app
 

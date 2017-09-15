@@ -14,6 +14,7 @@ from apps.scrappers.indicatorsCrawl import get_values_by_years
 from apps.snippets import utils
 from apps.tasks.celery import app
 from apps.snippets.utils import chunks
+from django.db.utils import IntegrityError
 
 
 PATTERN_DATE = '\d{2}.[A-Z][a-z]{2}.\d{4}'
@@ -45,5 +46,8 @@ def get_historical_values(year_from, year_to):
                             date=date,
                         ),
                     )
-            UF.objects.bulk_create(unity_values)
+            try:
+                UF.objects.bulk_create(unity_values)
+            except IntegrityError as e:
+                logger.warning('Integrity Error {0}'.format(e))
     logger.info('end get_historical_values task')

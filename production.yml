@@ -8,9 +8,7 @@ services:
         volumes:
             - ./compose/data/db:/var/lib/mysql
         ports:
-            - "3306:3306"
-    selenium:
-        image: selenium/standalone-firefox:3.5.3-astatine
+            - "3307:3306"
     django:
         build:
             context: .
@@ -22,26 +20,13 @@ services:
         volumes:
             - ./api:/app
         command: sh /gunicorn.sh
-    worker:
-        build:
-            context: .
-            dockerfile: ./compose/production/django/Dockerfile
-        depends_on:
-         - db
-         - selenium
-        env_file: 
-            - compose.env
-        volumes:
-            - ./api:/app
-        command: sh /celeryworker.sh
-    web:
+    nginx:
         image: nginx:1.13-alpine
         depends_on:
             - django
-        env_file: 
-            - compose.env
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf
         ports:
-            - "80:80"
+            - "8000:80"
+      
     

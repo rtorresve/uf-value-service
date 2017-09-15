@@ -4,10 +4,6 @@ Created on Sep 12, 2017
 
 @author: rtorres
 '''
-import dj_database_url
-
-import raven
-
 from .base import *
 
 
