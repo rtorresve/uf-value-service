@@ -120,6 +120,9 @@ and if you do not use a external borker services you need run
 In my particular case I generally use [CloudAMQP](https://cloudamqp.com/) to tryed my personal projects
 
 
+<u>Import!!!</u> please add the absolute path to you custom <b>conf.json</> in the manage.py and apps.tasks.celery.py files
+
+
 ## The Demo
 
 To show a live demo use any REST client to endpoints in the domain (http://devtest.bid)[http://devtest.bid]

@@ -24,7 +24,7 @@ if not settings.configured:
         'conf.settings.{0}'.format(DJANGO_ENV))  # pragma: no cover
 
 
-app = Celery('tasks', broker=settings.M.CELERY_BROKER_URL)
+app = Celery('tasks', broker=M.CELERY_BROKER_URL)
 
 app.autodiscover_tasks(['apps.indicators'])
 
