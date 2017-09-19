@@ -6,10 +6,17 @@ Created on Sep 14, 2017
 '''
 from .base import *  # noqa
 
-DEBUG = M.DJANGO_DEBUG or True
+DEBUG = True
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 SECRET_KEY = ',2c^~jZkmoBoSkDPh&RP6c{~dg*aCEGf|}{(qT.u,M!7C,)w?:'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'dev.db3',
+    }
+}
 
 CACHES = {
     'default': {
@@ -21,7 +28,7 @@ CACHES = {
 MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 INSTALLED_APPS += ['debug_toolbar', ]
 
-INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
+INTERNAL_IPS = ['127.0.0.1', ]
 
 
 import socket

@@ -18,6 +18,12 @@ TEMPLATES[0]['OPTIONS']['debug'] = False  # noqa
 # Note: This key only used for development and testing.
 SECRET_KEY = 'CHANGEME!!!'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test.db3',
+    }
+}
 
 # CACHING
 # ------------------------------------------------------------------------------
