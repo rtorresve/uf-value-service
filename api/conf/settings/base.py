@@ -10,17 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 import dj_database_url
-import milieu
 import os
 
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-try:
-    M = milieu.init(path=os.path.join(BASE_DIR, '../conf.json'))
-except FileNotFoundError:
-    raise FileNotFoundError('I do not find the conf.json file')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -29,7 +21,7 @@ except FileNotFoundError:
 SECRET_KEY = '*oyw40a%^u*)b1h9i)010qj-0h0b1rd)c&o2ipg18--!6da)*a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = M.DEBUG
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -188,11 +180,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 INSTALLED_APPS += ['apps.tasks.celery.CeleryConfig']
 
-CELERY_ALWAYS_EAGER = False
-CELERY_BROKER_URL = M.CELERY_BROKER_URL
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'django://')
 
-CELERY_BROKER_URL = M.CELERY_BROKER_URL or 'django://'
 
 if CELERY_BROKER_URL == 'django://':
     CELERY_RESULT_BACKEND = 'redis://'
