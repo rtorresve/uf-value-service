@@ -9,6 +9,7 @@ import os
 import milieu
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+from builtins import FileNotFoundError
 
 
 WEBDRIVER_HEADER = {

@@ -3,8 +3,7 @@ Test settings
 
 - Used to run tests fast on the continuous integration server and locally
 '''
-
-from .base import *  # noqa
+from conf.settings.base import *  # noqa
 
 # DEBUG
 # ------------------------------------------------------------------------------
@@ -18,6 +17,12 @@ TEMPLATES[0]['OPTIONS']['debug'] = False  # noqa
 # Note: This key only used for development and testing.
 SECRET_KEY = 'CHANGEME!!!'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test.db3',
+    },
+}
 
 # CACHING
 # ------------------------------------------------------------------------------
@@ -50,3 +55,5 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [  # noqa
         'django.template.loaders.app_directories.Loader',
     ], ],
 ]
+
+CELERY_ALWAYS_EAGER = True

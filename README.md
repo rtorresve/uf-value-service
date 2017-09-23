@@ -2,6 +2,7 @@
 
 ## RESUME
 
+
 The target about this project consist to get the historical information about the value of UF from the web Central Bank of Chile web page.
 
 ## Technical descriptions
@@ -102,6 +103,7 @@ And to use this you need pass two integers to get the historical information bet
 
 
 ## DEPLOY
+
 
 Is very important that you set your custom setting in a json file in `api/` path with the name <strong>config.json</strong> you can use the config.json.example
 

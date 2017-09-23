@@ -4,28 +4,36 @@ Created on Sep 14, 2017
 
 @author: rtorres
 '''
-from .base import *  # noqa
+from conf.settings.base import *  # noqa
 
-DEBUG = M.DJANGO_DEBUG or True
-TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+DEBUG = True
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG  # noqa
 
 SECRET_KEY = ',2c^~jZkmoBoSkDPh&RP6c{~dg*aCEGf|}{(qT.u,M!7C,)w?:'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'dev.db3',
+    },
+}
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': ''
-    }
+        'LOCATION': '',
+    },
 }
 
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-INSTALLED_APPS += ['debug_toolbar', ]
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]  # noqa
+INSTALLED_APPS += ['debug_toolbar', ]  # noqa
 
-INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
+INTERNAL_IPS = ['127.0.0.1', ]
 
 
-import socket
-import os
+import socket  # noqa
+import os  # noqa
+
 # tricks to have debug toolbar when developing with docker
 if os.environ.get('USE_DOCKER') == 'yes':
     ip = socket.gethostbyname(socket.gethostname())

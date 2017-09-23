@@ -1,17 +1,11 @@
-import milieu
 import os
 import sys
 
-try:
-    M = milieu.init(path='/webapps/uf/api/conf.json')
-except FileNotFoundError:
-    M = milieu.init()
-
-DJANGO_ENV = M.DJANGO_ENV or 'dev'
+DJANGO_ENV = os.environ.get('DJANGO_ENV')
 
 if __name__ == '__main__':
-    if DJANGO_ENV == 'prod':
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.prod')
+    if DJANGO_ENV:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.{0}'.format(DJANGO_ENV))
     else:
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'conf.settings.dev')
     try:
